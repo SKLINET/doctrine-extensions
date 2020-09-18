@@ -3,7 +3,7 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
 
     <testsuites>
-        <testsuite name="StofDoctrineExtensionsBundle test suite">
+        <testsuite name="DoctrineExtensionsBundle test suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>

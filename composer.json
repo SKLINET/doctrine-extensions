@@ -26,6 +26,6 @@
     "symfony/mime": "To use the Mime component integration for Uploadable"
   },
   "autoload": {
-    "psr-4": { "Stof\\DoctrineExtensionsBundle\\": "" }
+    "psr-4": { "SKLINET\\DoctrineExtensionsBundle\\": "" }
   }
 }
