@@ -1,5 +1,5 @@
 {
-  "name": "SKLINET/doctrine-extensions",
+  "name": "sklinet/doctrine-extensions",
   "type": "symfony-bundle",
   "description": "Integration of the gedmo/doctrine-extensions with Symfony",
   "keywords": ["tree", "behaviors", "doctrine2", "extensions", "gedmo", "sluggable","loggable", "translatable", "nestedset", "sortable", "timestampable"],
