@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="sklinet_doctrine_extensions.listener.uploadable.class">Gedmo\Uploadable\UploadableListener</parameter>
+    </parameters>
+    <services>
+        <service id="sklinet_doctrine_extensions.listener.uploadable" class="%sklinet_doctrine_extensions.listener.uploadable.class%" public="false">
+            <configurator service="sklinet_doctrine_extensions.uploadable.configurator" method="configure" />
+            <argument type="service" id="sklinet_doctrine_extensions.uploadable.mime_type_guesser" />
+
+            <call method="setAnnotationReader">
+                <argument type="service" id="annotation_reader" />
+            </call>
+
+            <call method="setDefaultFileInfoClass">
+                <argument>%sklinet_doctrine_extensions.uploadable.default_file_info.class%</argument>
+            </call>
+        </service>
+    </services>
+</container>

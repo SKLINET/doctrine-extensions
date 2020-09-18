@@ -1,0 +1,31 @@
+{
+  "name": "SKLINET/doctrine-extensions",
+  "type": "symfony-bundle",
+  "description": "Integration of the gedmo/doctrine-extensions with Symfony",
+  "keywords": ["tree", "behaviors", "doctrine2", "extensions", "gedmo", "sluggable","loggable", "translatable", "nestedset", "sortable", "timestampable"],
+  "homepage": "https://github.com/SKLINET/doctrine-extensions",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "SKLINET",
+      "email": "dev@sklinet.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1.3",
+    "symfony/framework-bundle": "^4.3 || ^5.0",
+    "gedmo/doctrine-extensions": "^2.3.4"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^4.4",
+    "symfony/security-bundle": "^4.3 || ^5.0"
+  },
+  "suggest": {
+    "doctrine/doctrine-bundle": "to use the ORM extensions",
+    "doctrine/mongodb-odm-bundle": "to use the MongoDB ODM extensions",
+    "symfony/mime": "To use the Mime component integration for Uploadable"
+  },
+  "autoload": {
+    "psr-4": { "Stof\\DoctrineExtensionsBundle\\": "" }
+  }
+}
