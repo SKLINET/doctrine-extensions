@@ -26,7 +26,6 @@ class Configuration implements ConfigurationInterface
             ->append($this->getVendorNode('orm'))
             ->append($this->getVendorNode('mongodb'))
             ->append($this->getClassNode())
-            ->append($this->getUploadableNode())
             ->children()
                 ->scalarNode('default_locale')
                     ->cannotBeEmpty()

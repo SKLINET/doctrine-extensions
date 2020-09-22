@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class DoctrineExtensionsExtension extends Extension
+class SklinetDoctrineExtensionsExtension extends Extension
 {
     private $entityManagers   = array();
     private $documentManagers = array();

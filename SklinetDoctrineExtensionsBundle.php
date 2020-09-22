@@ -6,7 +6,7 @@ use SKLINET\DoctrineExtensionsBundle\DependencyInjection\Compiler\ValidateExtens
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class DoctrineExtensionsBundle extends Bundle
+class SklinetDoctrineExtensionsBundle extends Bundle
 {
     /**
      * {@inheritdoc}
