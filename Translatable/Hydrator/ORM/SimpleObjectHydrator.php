@@ -33,7 +33,6 @@ class SimpleObjectHydrator extends BaseSimpleObjectHydrator
     {
         $listener = $this->getTranslatableListener();
         $this->savedSkipOnLoad = $listener->isSkipOnLoad();
-        $listener->setSkipOnLoad(true);
         parent::prepare();
     }
 
