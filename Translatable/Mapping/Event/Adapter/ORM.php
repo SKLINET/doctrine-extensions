@@ -96,7 +96,6 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
                                     $transRes[$pr] = $propertyAccessor->getValue($trans, $pr);
                                 }
                             }
-                            $transRes =
                             $result[] = $transRes;
                         }
                     }
@@ -106,7 +105,7 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
             }
             // if collection is not set, fetch it through relation
             if (!$found) {
-                $dql = 'SELECT t.content, t.field FROM '.$translationClass.' t';
+                $dql = 'SELECT t FROM '.$translationClass.' t';
                 $dql .= ' WHERE t.locale = :locale';
                 $dql .= ' AND t.object = :object';
 
@@ -118,7 +117,7 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
             // load translated content for all translatable fields
             $objectId = $this->foreignKey($wrapped->getIdentifier(), $translationClass);
             // construct query
-            $dql = 'SELECT t.content, t.field FROM '.$translationClass.' t';
+            $dql = 'SELECT t FROM '.$translationClass.' t';
             $dql .= ' WHERE t.foreignKey = :objectId';
             $dql .= ' AND t.locale = :locale';
             $dql .= ' AND t.objectClass = :objectClass';
@@ -270,12 +269,23 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
         $em = $this->getObjectManager();
         $wrapped = AbstractWrapper::wrap($object, $em);
         $meta = $wrapped->getMetadata();
-        $type = Type::getType($meta->getTypeOfField($field));
-        if ($value === false) {
+        $typeOfField = $meta->getTypeOfField($field);
+        if ($typeOfField) {
+            $type = Type::getType($typeOfField);
+            if ($value === false) {
+                $value = $wrapped->getPropertyValue($field);
+            }
+            return $type->convertToDatabaseValue($value, $em->getConnection()->getDatabasePlatform());
+        } else {
             $value = $wrapped->getPropertyValue($field);
+            foreach ($wrapped->getMetadata()->associationMappings as $assoc) {
+                if ($assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
+                    return $value;
+                }
+            }
         }
 
-        return $type->convertToDatabaseValue($value, $em->getConnection()->getDatabasePlatform());
+        return null;
     }
 
     /**
@@ -286,8 +296,18 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
         $em = $this->getObjectManager();
         $wrapped = AbstractWrapper::wrap($object, $em);
         $meta = $wrapped->getMetadata();
-        $type = Type::getType($meta->getTypeOfField($field));
-        $value = $type->convertToPHPValue($value, $em->getConnection()->getDatabasePlatform());
-        $wrapped->setPropertyValue($field, $value);
+        $typeOfField = $meta->getTypeOfField($field);
+        if ($typeOfField) {
+            $type = Type::getType($meta->getTypeOfField($field));
+            $value = $type->convertToPHPValue($value, $em->getConnection()->getDatabasePlatform());
+            $wrapped->setPropertyValue($field, $value);
+        } else {
+            foreach ($wrapped->getMetadata()->associationMappings as $assoc) {
+                if (is_object($value) && $assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
+                    $wrapped->setPropertyValue($field, $value);
+                    break;
+                }
+            }
+        }
     }
 }

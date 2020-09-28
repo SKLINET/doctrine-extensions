@@ -287,12 +287,15 @@ class TranslationWalker extends SqlWalker
     {
         $q = $this->getQuery();
         $locale = $q->getHint(TranslatableListener::HINT_TRANSLATABLE_LOCALE);
+
         if (!$locale) {
             // use from listener
             $locale = $this->listener->getListenerLocale();
+        } else {
+            $this->listener->setTranslatableLocale($locale);
         }
         $defaultLocale = $this->listener->getDefaultLocale();
-        if ($locale === $defaultLocale  && !$this->listener->getPersistDefaultLocaleTranslation()) {
+        if ($locale === $defaultLocale && !$this->listener->getPersistDefaultLocaleTranslation()) {
             // Skip preparation as there's no need to translate anything
             return;
         }
@@ -333,22 +336,16 @@ class TranslationWalker extends SqlWalker
             isset($this->components[$dqlAlias]) ? $this->components[$dqlAlias] .= $sql : $this->components[$dqlAlias] = $sql;
 
             foreach ($config['fields'] as $field) {
-
-                $sql .= ' AND '.$tblAlias.'.'.$quoteStrategy->getColumnName($field, $transMeta, $this->platform)
-                    .' = '.$this->conn->quote($field);
-                $originalField = $compTblAlias.'.'.$quoteStrategy->getColumnName($field, $meta, $this->platform);
-                $substituteField = $tblAlias.'.'.$quoteStrategy->getColumnName($field, $transMeta, $this->platform);
-                $this->replacements[$originalField] = $substituteField;
+                if (!$meta->isAssociationWithSingleJoinColumn($field)) {
+                    if ($joinStrategy !== 'INNER') {
+                        $sql .= ' AND '.$tblAlias.'.'.$quoteStrategy->getColumnName($field, $transMeta, $this->platform)
+                            .' = '.$this->conn->quote($field);
+                    }
+                    $originalField = $compTblAlias.'.'.$quoteStrategy->getColumnName($field, $meta, $this->platform);
+                    $substituteField = $tblAlias.'.'.$quoteStrategy->getColumnName($field, $transMeta, $this->platform);
+                    $this->replacements[$originalField] = $substituteField;
+                }
             }
-
-            // Treat translation as original field type
-//            $fieldMapping = $meta->getFieldMapping($field);
-//            if ((($this->platform instanceof MySqlPlatform) &&
-//                    in_array($fieldMapping["type"], array("decimal"))) ||
-//                (!($this->platform instanceof MySqlPlatform) &&
-//                    !in_array($fieldMapping["type"], array("datetime", "datetimetz", "date", "time")))) {
-//                $type = Type::getType($fieldMapping["type"]);
-//            }
         }
     }
 
