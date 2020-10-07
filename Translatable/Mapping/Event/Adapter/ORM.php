@@ -279,7 +279,7 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
         } else {
             $value = $wrapped->getPropertyValue($field);
             foreach ($wrapped->getMetadata()->associationMappings as $assoc) {
-                if ($assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
+                if ($value && $assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
                     return $value;
                 }
             }
@@ -303,7 +303,7 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
             $wrapped->setPropertyValue($field, $value);
         } else {
             foreach ($wrapped->getMetadata()->associationMappings as $assoc) {
-                if (is_object($value) && $assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
+                if ($value && is_object($value) && $assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
                     $wrapped->setPropertyValue($field, $value);
                     break;
                 }
