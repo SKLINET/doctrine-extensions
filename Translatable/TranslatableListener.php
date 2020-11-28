@@ -632,12 +632,12 @@ class TranslatableListener extends MappedEventSubscriber
                         $this->pendingTranslationInserts[spl_object_hash($object)][] = $translation;
                     } else {
                         // persist and compute change set for translation
-                        if ($wasPersistedSeparetely) {
-                            $ea->recomputeSingleObjectChangeset($uow, $translationMetadata, $translation);
-                        } else {
-                            $om->persist($translation);
-                            $uow->computeChangeSet($translationMetadata, $translation);
-                        }
+//                        if ($wasPersistedSeparetely) {
+//                            $ea->recomputeSingleObjectChangeset($uow, $translationMetadata, $translation);
+//                        } else {
+//                            $om->persist($translation);
+//                            $uow->computeChangeSet($translationMetadata, $translation);
+//                        }
                     }
                 }
             }
@@ -651,6 +651,8 @@ class TranslatableListener extends MappedEventSubscriber
                 $this->removeTranslationInDefaultLocale($oid, $field);
             }
         }
+        $om->persist($translation);
+        $uow->computeChangeSet($translationMetadata, $translation);
         $this->translatedInLocale[$oid] = $locale;
         // check if we have default translation and need to reset the translation
         if (!$isInsert && strlen($this->defaultLocale)) {
