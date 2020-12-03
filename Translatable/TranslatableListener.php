@@ -632,9 +632,10 @@ class TranslatableListener extends MappedEventSubscriber
                         $this->pendingTranslationInserts[spl_object_hash($object)][] = $translation;
                     } else {
                         // persist and compute change set for translation
-//                        if ($wasPersistedSeparetely) {
-//                            $ea->recomputeSingleObjectChangeset($uow, $translationMetadata, $translation);
-//                        } else {
+                        if ($wasPersistedSeparetely) {
+                            $ea->recomputeSingleObjectChangeset($uow, $translationMetadata, $translation);
+                        }
+//                        else {
 //                            $om->persist($translation);
 //                            $uow->computeChangeSet($translationMetadata, $translation);
 //                        }
