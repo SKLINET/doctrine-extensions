@@ -306,6 +306,8 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
                 if ($value && is_object($value) && $assoc['targetEntity'] === str_replace('Proxies\\__CG__\\', '', get_class($value))) {
                     $wrapped->setPropertyValue($field, $value);
                     break;
+                } else if ($value === null) {
+                    $wrapped->setPropertyValue($field, $value);
                 }
             }
         }
