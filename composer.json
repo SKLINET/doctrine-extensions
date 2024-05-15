@@ -12,14 +12,14 @@
     }
   ],
   "require": {
-    "php": "^7.1.3 || ^8.3.0",
-    "symfony/framework-bundle": "^4.3 || ^5.0",
+    "php": "^8.3.0",
+    "symfony/framework-bundle": "^6.0",
     "gedmo/doctrine-extensions": "^v3.0.5",
-    "symfony/property-info": "^4.3 || ^5.0"
+    "symfony/property-info": "^6.0"
   },
   "require-dev": {
-    "symfony/phpunit-bridge": "^4.4",
-    "symfony/security-bundle": "^4.3 || ^5.0"
+    "symfony/phpunit-bridge": "^6.0",
+    "symfony/security-bundle": "^6.0"
   },
   "suggest": {
     "doctrine/doctrine-bundle": "to use the ORM extensions",
