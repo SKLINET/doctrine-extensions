@@ -15,7 +15,8 @@
     "php": "^8.3.0",
     "symfony/framework-bundle": "^6.0",
     "gedmo/doctrine-extensions": "^v3.0.5",
-    "symfony/property-info": "^6.0"
+    "symfony/property-info": "^6.0",
+    "doctrine/annotations": "^2.0"
   },
   "require-dev": {
     "symfony/phpunit-bridge": "^6.0",
