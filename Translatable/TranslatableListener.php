@@ -484,12 +484,12 @@ class TranslatableListener extends MappedEventSubscriber
                 ) {
                     $ea->setTranslationValue($object, $field, $translated);
                     // ensure clean changeset
-                    $ea->setOriginalObjectProperty(
-                        $om->getUnitOfWork(),
-                        $oid,
-                        $field,
-                        $meta->getReflectionProperty($field)->getValue($object)
-                    );
+//                    $ea->setOriginalObjectProperty(
+//                        $om->getUnitOfWork(),
+//                        $oid,
+//                        $field,
+//                        $meta->getReflectionProperty($field)->getValue($object)
+//                    );
                 }
             }
         }
