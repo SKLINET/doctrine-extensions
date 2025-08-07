@@ -6,25 +6,16 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * SKLINET\DoctrineExtensionsBundle\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation
- *
- * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 abstract class AbstractPersonalTranslation
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Column(type: "integer")]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
     protected $id;
 
-    /**
-     * @var string $locale
-     *
-     * @ORM\Column(type="string", length=8)
-     */
+    #[ORM\Column(type: "string", length: 8)]
     protected $locale;
 
     /**
